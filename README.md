@@ -1,8 +1,41 @@
 # 📡 restore-lan.sh - Умное восстановление сети
 
+## 🚀 Быстрая установка
+
+### ⚡ Одна команда для установки (рекомендуется):
+```bash
+curl -sSL https://raw.githubusercontent.com/username/rael-scripts/main/scripts/restore-lan/install.sh | bash
+```
+
+### 🔧 Или установка скрипта напрямую:
+```bash
+curl -sSL https://raw.githubusercontent.com/username/rael-scripts/main/scripts/restore-lan/restore-lan.sh | sudo tee ~/.bin/restore-lan > /dev/null && sudo chmod +x ~/.bin/restore-lan
+```
+
+### 📁 Пошаговая установка:
+```bash
+# 1. Создаем папку для скриптов (если её нет)
+mkdir -p ~/.bin
+
+# 2. Скачиваем скрипт
+curl -sSL https://raw.githubusercontent.com/username/rael-scripts/main/scripts/restore-lan/restore-lan.sh -o ~/.bin/restore-lan
+
+# 3. Делаем исполняемым
+chmod +x ~/.bin/restore-lan
+
+# 4. Добавляем в PATH (если нужно)
+echo 'export PATH="$HOME/.bin:$PATH"' >> ~/.bashrc
+source ~/.bashrc
+```
+
+### ✅ Проверка установки:
+```bash
+restore-lan --help
+```
+
 ## 📋 Описание
 
-`restore-lan.sh` - это интеллектуальный скрипт для восстановления сетевого подключения на системах с Docker и VPN (sing-box, Outline, Clash API). Скрипт автоматически диагностирует проблемы, создает резервные копии и восстанавливает работоспособность сети.
+`restore-lan` - это интеллектуальный скрипт для восстановления сетевого подключения на системах с Docker и VPN (sing-box, Outline, Clash API). Скрипт автоматически диагностирует проблемы, создает резервные копии и восстанавливает работоспособность сети.
 
 ## 🎯 Назначение
 
@@ -18,18 +51,18 @@
 
 ### Минимальный запуск:
 ```bash
-sudo bash scripts/restore-lan.sh
+sudo restore-lan
 ```
 
 ### Рекомендуемый первый запуск (диагностика):
 ```bash
-sudo bash scripts/restore-lan.sh --safe-mode --dry
+sudo restore-lan --safe-mode --dry
 ```
 
 ## 📖 Полный синтаксис
 
 ```bash
-sudo bash restore-lan.sh [ОПЦИИ]
+sudo restore-lan [ОПЦИИ]
 ```
 
 ### Доступные опции:
@@ -49,37 +82,37 @@ sudo bash restore-lan.sh [ОПЦИИ]
 ### 1. **Диагностика без изменений**
 ```bash
 # Только посмотреть что происходит
-sudo bash restore-lan.sh --safe-mode --dry
+sudo restore-lan --safe-mode --dry
 ```
 
 ### 2. **Обычное восстановление**
 ```bash
 # Стандартное восстановление с созданием резервных копий
-sudo bash restore-lan.sh
+sudo restore-lan
 ```
 
 ### 3. **Восстановление с принудительной остановкой Docker**
 ```bash
 # Если Docker контейнеры блокируют сеть
-sudo bash restore-lan.sh --force-docker-stop
+sudo restore-lan --force-docker-stop
 ```
 
 ### 4. **Восстановление из резервной копии**
 ```bash
 # Если что-то пошло не так
-sudo bash restore-lan.sh --restore-backup
+sudo restore-lan --restore-backup
 ```
 
 ### 5. **Восстановление конкретного интерфейса**
 ```bash
 # Указать конкретный сетевой интерфейс
-sudo bash restore-lan.sh --iface enp2s0
+sudo restore-lan --iface enp2s0
 ```
 
 ### 6. **Быстрая очистка без резервных копий**
 ```bash
 # Экстренное восстановление
-sudo bash restore-lan.sh --no-backup --force-docker-stop
+sudo restore-lan --no-backup --force-docker-stop
 ```
 
 ## 📊 Что делает скрипт
@@ -170,7 +203,7 @@ sudo bash restore-lan.sh --no-backup --force-docker-stop
 ### Если скрипт не запускается:
 ```bash
 # Проверка прав
-ls -la scripts/restore-lan.sh
+ls -la ~/.bin/restore-lan
 
 # Проверка блокировки
 ls -la /tmp/restore_lan.lock
@@ -188,7 +221,7 @@ tail -f /tmp/restore_lan_*.log
 ls -la /tmp/network_backups/
 
 # Восстановление из резервной копии
-sudo bash restore-lan.sh --restore-backup
+sudo restore-lan --restore-backup
 ```
 
 ### Проверка состояния сети:
@@ -211,24 +244,24 @@ docker network ls
 
 ### Сценарий 1: Потеря доступа к localhost
 ```bash
-sudo bash restore-lan.sh --safe-mode --dry
-sudo bash restore-lan.sh --force-docker-stop
+sudo restore-lan --safe-mode --dry
+sudo restore-lan --force-docker-stop
 ```
 
 ### Сценарий 2: VPN блокирует Docker
 ```bash
-sudo bash restore-lan.sh --safe-mode
-sudo bash restore-lan.sh
+sudo restore-lan --safe-mode
+sudo restore-lan
 ```
 
 ### Сценарий 3: Экстренное восстановление
 ```bash
-sudo bash restore-lan.sh --no-backup --force-docker-stop
+sudo restore-lan --no-backup --force-docker-stop
 ```
 
 ### Сценарий 4: Откат изменений
 ```bash
-sudo bash restore-lan.sh --restore-backup
+sudo restore-lan --restore-backup
 ```
 
 ## 🔧 Настройка и кастомизация
@@ -245,7 +278,17 @@ export LOG_LEVEL="DEBUG"
 ### Автоматизация:
 ```bash
 # Добавить в crontab для автоматического восстановления
-0 */6 * * * /usr/bin/sudo /path/to/restore-lan.sh --safe-mode >> /var/log/network-recovery.log 2>&1
+0 */6 * * * /usr/bin/sudo ~/.bin/restore-lan --safe-mode >> /var/log/network-recovery.log 2>&1
+```
+
+### Создание алиаса (опционально):
+```bash
+# Добавить в ~/.bashrc для удобства
+echo 'alias restore-lan="sudo ~/.bin/restore-lan"' >> ~/.bashrc
+source ~/.bashrc
+
+# Теперь можно запускать без sudo
+restore-lan --help
 ```
 
 ## 📞 Поддержка
@@ -275,10 +318,24 @@ docker network inspect bridge
 pgrep -f "sing-box|outline|clash"
 ```
 
+## 🆘 Обновление скрипта
+
+### Автоматическое обновление:
+```bash
+# Обновить до последней версии
+curl -sSL https://raw.githubusercontent.com/username/rael-scripts/main/scripts/restore-lan/restore-lan.sh -o ~/.bin/restore-lan && chmod +x ~/.bin/restore-lan
+```
+
+### Проверка версии:
+```bash
+# Посмотреть текущую версию
+restore-lan --version 2>/dev/null || echo "Версия не определена"
+```
+
 ---
 
 **⚠️ Внимание**: Этот скрипт изменяет сетевую конфигурацию системы. Всегда тестируйте на тестовой системе и создавайте резервные копии перед использованием в продакшене.
 
 **📝 Автор**: Rael (AI Assistant)  
 **🔄 Версия**: 2.0  
-**📅 Обновлено**: $(date +%Y-%m-%d)
+**📅 Обновлено**: 2024-12-19

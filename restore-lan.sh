@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 # restore-lan.sh — умное восстановление сети для систем с Docker и VPN
 # Адаптирован для Ubuntu 20.04+ с Docker, sing-box/Outline, Clash API
-# Использование: sudo bash restore-lan.sh [--iface enp2s0] [--dry] [--backup] [--safe-mode] [--restore-backup] [--force-docker-stop]
+# Использование: sudo restore-lan [--iface enp2s0] [--dry] [--backup] [--safe-mode] [--restore-backup] [--force-docker-stop]
 
 set -Eeuo pipefail
 
+# Версия скрипта
+VERSION="2.0"
 IFACE=""
 DRY=0
 BACKUP=1
@@ -41,14 +43,30 @@ for a in "$@"; do
     --safe-mode) SAFE_MODE=1; shift ;;
     --restore-backup) RESTORE_BACKUP=1; shift ;;
     --force-docker-stop) FORCE_DOCKER_STOP=1; shift ;;
+    --version|-v) 
+      echo "restore-lan версии $VERSION"
+      echo "Автор: Rael (AI Assistant)"
+      echo "Описание: Умное восстановление сети для систем с Docker и VPN"
+      exit 0
+      ;;
     --help|-h) 
-      echo "Использование: $0 [--iface INTERFACE] [--dry] [--no-backup] [--safe-mode] [--restore-backup] [--force-docker-stop]"
+      echo "Использование: restore-lan [--iface INTERFACE] [--dry] [--no-backup] [--safe-mode] [--restore-backup] [--force-docker-stop]"
       echo "  --iface INTERFACE     Указать сетевой интерфейс (автоопределение если не указан)"
       echo "  --dry                 Только показать что будет сделано"
       echo "  --no-backup           Не создавать резервные копии"
       echo "  --safe-mode           Безопасный режим (только диагностика и мягкие исправления)"
       echo "  --restore-backup      Восстановить из последней резервной копии"
       echo "  --force-docker-stop   Принудительно остановить все Docker контейнеры"
+      echo "  --version, -v         Показать версию скрипта"
+      echo "  --help, -h            Показать эту справку"
+      echo ""
+      echo "Примеры:"
+      echo "  sudo restore-lan                    # Обычное восстановление"
+      echo "  sudo restore-lan --safe-mode --dry  # Диагностика без изменений"
+      echo "  sudo restore-lan --force-docker-stop # С принудительной остановкой Docker"
+      echo ""
+      echo "Быстрая установка:"
+      echo "  curl -sSL https://raw.githubusercontent.com/username/rael-scripts/main/scripts/restore-lan/restore-lan.sh | sudo tee ~/.bin/restore-lan > /dev/null && sudo chmod +x ~/.bin/restore-lan"
       exit 0
       ;;
     *) shift ;;
