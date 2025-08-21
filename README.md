@@ -4,12 +4,12 @@
 
 ### ⚡ Одна команда для установки (рекомендуется):
 ```bash
-curl -sSL https://raw.githubusercontent.com/username/rael-scripts/main/scripts/restore-lan/install.sh | bash
+curl -sSL https://raw.githubusercontent.com/zenc0dr/restore-lan/main/install.sh | bash
 ```
 
 ### 🔧 Или установка скрипта напрямую:
 ```bash
-curl -sSL https://raw.githubusercontent.com/username/rael-scripts/main/scripts/restore-lan/restore-lan.sh | sudo tee ~/.bin/restore-lan > /dev/null && sudo chmod +x ~/.bin/restore-lan
+curl -sSL https://raw.githubusercontent.com/zenc0dr/restore-lan/main/restore-lan.sh | sudo tee ~/.bin/restore-lan > /dev/null && sudo chmod +x ~/.bin/restore-lan
 ```
 
 ### 📁 Пошаговая установка:
@@ -18,7 +18,7 @@ curl -sSL https://raw.githubusercontent.com/username/rael-scripts/main/scripts/r
 mkdir -p ~/.bin
 
 # 2. Скачиваем скрипт
-curl -sSL https://raw.githubusercontent.com/username/rael-scripts/main/scripts/restore-lan/restore-lan.sh -o ~/.bin/restore-lan
+curl -sSL https://raw.githubusercontent.com/zenc0dr/restore-lan/main/restore-lan.sh -o ~/.bin/restore-lan
 
 # 3. Делаем исполняемым
 chmod +x ~/.bin/restore-lan
@@ -323,7 +323,7 @@ pgrep -f "sing-box|outline|clash"
 ### Автоматическое обновление:
 ```bash
 # Обновить до последней версии
-curl -sSL https://raw.githubusercontent.com/username/rael-scripts/main/scripts/restore-lan/restore-lan.sh -o ~/.bin/restore-lan && chmod +x ~/.bin/restore-lan
+curl -sSL https://raw.githubusercontent.com/zenc0dr/restore-lan/main/restore-lan.sh -o ~/.bin/restore-lan && chmod +x ~/.bin/restore-lan
 ```
 
 ### Проверка версии:

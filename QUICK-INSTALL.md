@@ -3,7 +3,7 @@
 ## 🚀 Одна команда для установки:
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/username/rael-scripts/main/scripts/restore-lan/install.sh | bash
+curl -sSL https://raw.githubusercontent.com/zenc0dr/restore-lan/main/install.sh | bash
 ```
 
 ## 📋 Что произойдет:
@@ -41,7 +41,7 @@ source ~/.bashrc
 
 # Установить вручную
 mkdir -p ~/.bin
-curl -sSL https://raw.githubusercontent.com/username/rael-scripts/main/scripts/restore-lan/restore-lan.sh -o ~/.bin/restore-lan
+curl -sSL https://raw.githubusercontent.com/zenc0dr/restore-lan/main/restore-lan.sh -o ~/.bin/restore-lan
 chmod +x ~/.bin/restore-lan
 ```
 
